@@ -1,0 +1,13 @@
+#cloud-config
+
+# This is the boot time cofiguration to the VSI. Here we install the JAVA pacakge to run java app
+# tar and firewalld to run some commands.
+# firewall commands will be used to add the service and open the ports on the VSI.
+
+runcmd: 
+   - yum install -y tar java firewalld 
+   - sudo systemctl stop firewalld   
+   - sudo firewall-offline-cmd --zone=public --add-service=http 
+   - sudo firewall-offline-cmd --zone=public --add-service=https 
+   - sudo firewall-offline-cmd --service=https --add-port=8080/tcp  
+   - sudo systemctl start firewalld 
